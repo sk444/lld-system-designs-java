@@ -42,6 +42,7 @@ This project uses **OpenAI's `/v1/chat/completions`** endpoint via OkHttp and Gs
 ```java
 OpenAIClient client = new OpenAIClient(System.getenv("OPENAI_API_KEY"));
 String message = client.generateMessage("Write a short shipping update for Shubham");
+```
 
 The new `service.message` package includes:
 
@@ -68,7 +69,7 @@ The system uses a `RetryHandler` interface. You can swap retry logic easily:
 RetryHandler retryHandler = new InMemoryRetryHandler(3);
 // OR in future:
 // RetryHandler retryHandler = new KafkaRetryHandler();
-
+```
 ## This makes it future-proof for:
 - Kafka or SQS-based async retry
 - Cron-based batch retry
