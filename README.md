@@ -23,4 +23,4 @@ This repository contains clean and modular implementations of common **Low-Level
   - Modular Code
   - README with design notes
 
-> 💼 Built by **Shubham Kumar** — prepping for senior backend roles with a focus on Java and LLD mastery.
+> 💼 Built by **Shubham Kumar** — for senior backend roles with a focus on Java and LLD mastery.
