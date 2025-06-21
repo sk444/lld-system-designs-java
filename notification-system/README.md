@@ -31,6 +31,11 @@ A modular, extensible notification system built using clean code principles and 
 - Strategy Pattern for dynamic channel invocation
 - Clean separation of model, channel, and service layers
 
+📐 Extensibility Ideas
+- Add Kafka-based retry queue
+- Store user preferences in Redis or DB
+- Track notification status in metrics system
+
 ## 🧱 Class Design
 
 - `Notification`
