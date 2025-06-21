@@ -1,0 +1,16 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+---
+
+### 🧾 .gitignore
+
+```gitignore
+*.class
+*.jar
+*.log
+*.iml
+target/
+bin/
+.idea/
+.DS_Store
