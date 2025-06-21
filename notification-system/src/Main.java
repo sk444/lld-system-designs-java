@@ -9,6 +9,10 @@ import model.UserPreference;
 import retry.InMemoryRetryHandler;
 import retry.RetryHandler;
 import service.NotificationService;
+import service.message.MessageContentGenerator;
+import service.message.MessageGeneratorFactory;
+import service.message.OpenAIBasedMessageGenerator;
+import service.message.OpenAIClient;
 
 import java.time.Instant;
 import java.util.Arrays;
@@ -18,16 +22,20 @@ import java.util.UUID;
 
 public class Main
 {
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    {
+        String generatedMessage = MessageGeneratorFactory.create();
+
         Notification notification = new Notification(
                 UUID.randomUUID().toString(),
                 "user123",
-                "🚚 Your order #123456 has been shipped!",
+                generatedMessage,
                 NotificationType.ORDER_UPDATE,
                 Instant.now().toEpochMilli()
         );
-
-        // Define user preferences (order matters)
+        /*
+         Define user preferences (order matters)
+         */
         UserPreference preference = new UserPreference(
                 "user123",
                 Arrays.asList(ChannelType.SMS, ChannelType.EMAIL, ChannelType.PUSH)

@@ -22,8 +22,6 @@ public class NotificationService {
 
     public void sendNotification(Notification notification, UserPreference preference)
     {
-        boolean notificationFailedForAllChannels = true;
-
         for (ChannelType channelType : preference.getPreferredChannels())
         {
             NotificationChannel channel = channelMap.get(channelType);
@@ -35,17 +33,12 @@ public class NotificationService {
 
             if (sent)
             {
-                notificationFailedForAllChannels = false;
                 notification.setStatus(NotificationStatus.SENT);
                 System.out.println("Notification sent via " + channelType);
-                continue;
+                return;
             }
         }
-
-        if(notificationFailedForAllChannels)
-        {
-            notification.setStatus(NotificationStatus.FAILED);
-            System.out.println("Notification failed on all channels.");
-        }
+         notification.setStatus(NotificationStatus.FAILED);
+         System.out.println("Notification failed on all channels.");
     }
 }
