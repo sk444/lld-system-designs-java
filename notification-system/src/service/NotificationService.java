@@ -5,42 +5,47 @@ import model.ChannelType;
 import model.Notification;
 import model.NotificationStatus;
 import model.UserPreference;
+import retry.RetryHandler;
 
-import java.util.List;
 import java.util.Map;
 
 public class NotificationService {
 
     private final Map<ChannelType, NotificationChannel> channelMap;
+    private final RetryHandler retryHandler;
 
-    public NotificationService(Map<ChannelType, NotificationChannel> channelMap) {
+    public NotificationService(Map<ChannelType, NotificationChannel> channelMap, RetryHandler retryHandler)
+    {
         this.channelMap = channelMap;
+        this.retryHandler = retryHandler;
     }
 
     public void sendNotification(Notification notification, UserPreference preference)
     {
-        List<ChannelType> channels = preference.getPreferredChannels();
+        boolean notificationFailedForAllChannels = true;
 
-        for (ChannelType channelType : channels) {
+        for (ChannelType channelType : preference.getPreferredChannels())
+        {
             NotificationChannel channel = channelMap.get(channelType);
+            if (channel == null) continue;
 
-            if (channel == null) {
-                System.out.println("No handler found for channel: " + channelType);
-                continue;
-            }
+            notification.setStatus(NotificationStatus.RETRYING);
 
-            boolean success = channel.sendNotification(notification);
+            boolean sent = retryHandler.handleRetry(notification, channelType, channel);
 
-            if (success) {
+            if (sent)
+            {
+                notificationFailedForAllChannels = false;
                 notification.setStatus(NotificationStatus.SENT);
-                System.out.println("Notification sent successfully via " + channelType);
-                return;
-            } else {
-                System.out.println("Failed to send via " + channelType + ". Trying next...");
+                System.out.println("Notification sent via " + channelType);
+                continue;
             }
         }
 
-        notification.setStatus(NotificationStatus.FAILED);
-        System.out.println("Notification delivery failed on all preferred channels.");
+        if(notificationFailedForAllChannels)
+        {
+            notification.setStatus(NotificationStatus.FAILED);
+            System.out.println("Notification failed on all channels.");
+        }
     }
 }

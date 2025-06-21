@@ -6,6 +6,8 @@ import model.ChannelType;
 import model.Notification;
 import model.NotificationType;
 import model.UserPreference;
+import retry.InMemoryRetryHandler;
+import retry.RetryHandler;
 import service.NotificationService;
 
 import java.time.Instant;
@@ -37,7 +39,9 @@ public class Main
         channelMap.put(ChannelType.PUSH, new PushChannel());
         channelMap.put(ChannelType.SMS, new SMSChannel());
 
-        NotificationService notificationService = new NotificationService(channelMap);
+        RetryHandler retryHandler = new InMemoryRetryHandler(3);
+
+        NotificationService notificationService = new NotificationService(channelMap, retryHandler);
 
         notificationService.sendNotification(notification, preference);
 
