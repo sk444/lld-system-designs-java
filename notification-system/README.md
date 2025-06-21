@@ -20,10 +20,26 @@ A modular, extensible notification system built using clean code principles and 
 
 ## ✅ Features
 - Supports Email, SMS, and Push notifications
+- Pluggable Retry Strategy (in-memory now, Kafka-ready later)
 - User-specific channel preferences
 - Strategy Pattern for pluggable channels
 - Graceful fallback on failure
 - Easily extendable (e.g., WhatsApp, Retry queue)
+- Easily swap retry mechanism (e.g., Kafka, DB, Scheduler)
+
+## 🧠 Pluggable Retry Strategy
+
+The system uses a `RetryHandler` interface. You can swap retry logic easily:
+
+```java
+RetryHandler retryHandler = new InMemoryRetryHandler(3);
+// OR in future:
+// RetryHandler retryHandler = new KafkaRetryHandler();
+
+## This makes it future-proof for:
+- Kafka or SQS-based async retry
+- Cron-based batch retry
+- Circuit breaker integration
 
 ## 🧱 Class Design Highlights
 - Follows SOLID principles
