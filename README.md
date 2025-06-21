@@ -7,10 +7,6 @@ This repository contains clean and modular implementations of common **Low-Level
 ## 📂 Systems Implemented
 
 - ✅ [Notification System](./notification-system/)
-- 🚧 URL Shortener (Coming Soon)
-- 🚧 Chat System
-- 🚧 E-Commerce Ordering
-- 🚧 File Sharing System
 
 ---
 
