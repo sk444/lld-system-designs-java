@@ -16,6 +16,21 @@ Design a system that sends notifications to users via multiple channels (Email, 
 
 ---
 
+A modular, extensible notification system built using clean code principles and design patterns in Java.
+
+## ✅ Features
+- Supports Email, SMS, and Push notifications
+- User-specific channel preferences
+- Strategy Pattern for pluggable channels
+- Graceful fallback on failure
+- Easily extendable (e.g., WhatsApp, Retry queue)
+
+## 🧱 Class Design Highlights
+- Follows SOLID principles
+- Interface segregation via `NotificationChannel`
+- Strategy Pattern for dynamic channel invocation
+- Clean separation of model, channel, and service layers
+
 ## 🧱 Class Design
 
 - `Notification`
